@@ -1,0 +1,85 @@
+button:
+
+function buttonClick() {
+    document.getElementById("par").innerHTML = "You Clicked";
+}
+
+module.exports = buttonClick;
+
+test:
+
+/**
+ * @jest-environment jsdom
+ */
+
+const buttonClick = require("../button");
+
+beforeEach(() => {
+    let fs = require("fs");
+    let fileContents = fs.readFileSync("index.html", "utf-8");
+    document.open();
+    document.write(fileContents);
+    document.close();
+});
+
+describe("DOM tests", () => {
+    test("expects p content to change", () => {
+        buttonClick();
+        expect(document.getElementById("par").innerHTML).toEqual("You Clicked");
+    });
+    test("h1 should exist", () => {
+        expect(document.getElementsByTagName("h1").length).toBe(1);
+    })
+});
+
+calc:
+
+function addition(num1, num2) {
+    return num1 + num2;
+}
+
+module.exports = addition;
+
+test:
+
+
+const addition = require("../calc");
+
+describe("Calculator", () => {
+    describe("Addition function", () => {
+        test("should return 42 for 20 + 22", () => {
+            expect(addition(20, 22)).toBe(42);
+        });
+        test("should return 73 for 42 + 31", () => {
+            expect(addition(42, 31)).toBe(73);
+        });
+
+    });
+    describe("Subtraction function", () => {
+
+    });
+    describe("Multiplication function", () => {
+
+    });
+    describe("Division function", () => {
+
+    });
+})
+
+html:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Jest Click Test</title>
+</head>
+<body>
+    <h1>Jest Click Test</h1>
+    <button onclick="buttonClick()">Click Me</button>
+    <p id="par"></p>
+    <script src="scripts/button.js"></script>
+</body>
+</html>
